@@ -1,14 +1,22 @@
-from flask import Flask
+from flask import Flask, jsonify
+from config import Config
 
 app = Flask(__name__)
+app.config.from_object(Config)
+
 
 @app.route("/")
 def index():
-    return {
+    return jsonify({
         "project": "SubInfo",
-        "status": "running",
-        "version": "0.1.0"
-    }
+        "version": app.config["VERSION"],
+        "status": "running"
+    })
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    app.run(
+        host=app.config["HOST"],
+        port=app.config["PORT"],
+        debug=app.config["DEBUG"]
+    )
