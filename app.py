@@ -1,17 +1,11 @@
-from flask import Flask, jsonify
+from flask import Flask
 from config import Config
+from routes.main import main
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
-
-@app.route("/")
-def index():
-    return jsonify({
-        "project": "SubInfo",
-        "version": app.config["VERSION"],
-        "status": "running"
-    })
+app.register_blueprint(main)
 
 
 if __name__ == "__main__":
